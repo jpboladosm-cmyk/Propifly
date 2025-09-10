@@ -1,16 +1,16 @@
+import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
-  View,
-  Text,
+  Alert,
+  Keyboard,
+  SafeAreaView,
   StyleSheet,
+  Text,
   TextInput,
   TouchableOpacity,
-  SafeAreaView,
-  Keyboard,
   TouchableWithoutFeedback,
-  Alert,
+  View,
 } from "react-native";
-import { useRouter } from "expo-router";
 
 export default function HomeScreen() {
   const [phone, setPhone] = useState("");
@@ -33,6 +33,10 @@ export default function HomeScreen() {
     router.push({ pathname: "/select-profile", params: { phone: `+56${clean}` } });
   };
 
+  const goToSearch = () => {
+    router.push("/search");
+  };
+
   return (
     <TouchableWithoutFeedback onPress={dismissKeyboard} accessible={false}>
       <SafeAreaView style={styles.container}>
@@ -44,6 +48,11 @@ export default function HomeScreen() {
         <Text style={styles.subtitle}>
           El portal inmobiliario de todos los chilenos
         </Text>
+
+        {/* Botón de búsqueda con IA */}
+        <TouchableOpacity style={styles.searchButton} onPress={goToSearch}>
+          <Text style={styles.searchButtonText}>🤖 Buscar Propiedades con IA</Text>
+        </TouchableOpacity>
 
         {/* Input teléfono */}
         <Text style={styles.label}>Ingresa tu número de teléfono:</Text>
@@ -93,6 +102,19 @@ const styles = StyleSheet.create({
     color: "#555",
     marginBottom: 40,
     textAlign: "center",
+  },
+  searchButton: {
+    backgroundColor: "#007bff", // Azul para IA
+    padding: 15,
+    borderRadius: 10,
+    width: "100%",
+    alignItems: "center",
+    marginBottom: 30,
+  },
+  searchButtonText: {
+    color: "#fff",
+    fontSize: 18,
+    fontWeight: "bold",
   },
   label: {
     marginBottom: 10,
