@@ -33,121 +33,172 @@ export default function HomeScreen() {
     router.push({ pathname: "/select-profile", params: { phone: `+56${clean}` } });
   };
 
-  const goToSearch = () => {
-    router.push("/search");
-  };
-
   return (
     <TouchableWithoutFeedback onPress={dismissKeyboard} accessible={false}>
       <SafeAreaView style={styles.container}>
-        {/* Logo */}
-        <Text style={styles.logo}>🏠</Text>
-
-        {/* Título */}
-        <Text style={styles.title}>Bienvenido a Propifly</Text>
-        <Text style={styles.subtitle}>
-          El portal inmobiliario de todos los chilenos
-        </Text>
-
-        {/* Botón de búsqueda con IA */}
-        <TouchableOpacity style={styles.searchButton} onPress={goToSearch}>
-          <Text style={styles.searchButtonText}>🤖 Buscar Propiedades con IA</Text>
-        </TouchableOpacity>
-
-        {/* Input teléfono */}
-        <Text style={styles.label}>Ingresa tu número de teléfono:</Text>
-        <View style={styles.phoneContainer}>
-          <Text style={styles.prefix}>CL +56</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="9 1234 5678"
-            keyboardType="phone-pad"
-            value={phone}
-            onChangeText={setPhone}
-            returnKeyType="done"
-            maxLength={12}
-          />
+        {/* Logo más pro */}
+        <View style={styles.logoContainer}>
+          <View style={styles.logoIcon}>
+            <Text style={styles.logoText}>🏡</Text>
+          </View>
+          <Text style={styles.brandName}>Propifly</Text>
         </View>
 
-        {/* Botón continuar */}
-        <TouchableOpacity style={styles.button} onPress={onContinue}>
-          <Text style={styles.buttonText}>Continuar</Text>
-        </TouchableOpacity>
+        {/* Título principal */}
+        <Text style={styles.title}>Encuentra tu hogar ideal</Text>
+        <Text style={styles.subtitle}>
+          Miles de propiedades en Chile te esperan
+        </Text>
+
+        {/* Sección de teléfono */}
+        <View style={styles.formSection}>
+          <Text style={styles.label}>Ingresa tu número para comenzar</Text>
+          <View style={styles.phoneContainer}>
+            <View style={styles.countryCode}>
+              <Text style={styles.countryCodeText}>🇨🇱 +56</Text>
+            </View>
+            <TextInput
+              style={styles.input}
+              placeholder="9 1234 5678"
+              placeholderTextColor="#999"
+              keyboardType="phone-pad"
+              value={phone}
+              onChangeText={setPhone}
+              returnKeyType="done"
+              maxLength={12}
+            />
+          </View>
+
+          {/* Botón continuar */}
+          <TouchableOpacity style={styles.continueButton} onPress={onContinue}>
+            <Text style={styles.continueButtonText}>Continuar →</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Footer sutil */}
+        <Text style={styles.footer}>
+          Al continuar, aceptas nuestros términos y condiciones
+        </Text>
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );
 }
 
-// 🎨 Estilos
+// 🎨 Estilos más pro
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#f8fafc",
     justifyContent: "center",
     alignItems: "center",
-    padding: 20,
+    padding: 24,
   },
-  logo: {
-    fontSize: 60,
-    marginBottom: 30,
+  logoContainer: {
+    alignItems: "center",
+    marginBottom: 48,
+  },
+  logoIcon: {
+    width: 80,
+    height: 80,
+    backgroundColor: "#3b82f6",
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 16,
+    shadowColor: "#3b82f6",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 12,
+    elevation: 8,
+  },
+  logoText: {
+    fontSize: 36,
+  },
+  brandName: {
+    fontSize: 32,
+    fontWeight: "700",
+    color: "#1e293b",
+    letterSpacing: -1,
   },
   title: {
-    fontSize: 26,
-    fontWeight: "bold",
-    marginBottom: 10,
+    fontSize: 28,
+    fontWeight: "600",
+    color: "#1e293b",
     textAlign: "center",
+    marginBottom: 8,
   },
   subtitle: {
     fontSize: 16,
-    color: "#555",
-    marginBottom: 40,
+    color: "#64748b",
     textAlign: "center",
+    marginBottom: 48,
+    lineHeight: 24,
   },
-  searchButton: {
-    backgroundColor: "#007bff", // Azul para IA
-    padding: 15,
-    borderRadius: 10,
+  formSection: {
     width: "100%",
-    alignItems: "center",
-    marginBottom: 30,
-  },
-  searchButtonText: {
-    color: "#fff",
-    fontSize: 18,
-    fontWeight: "bold",
+    maxWidth: 320,
   },
   label: {
-    marginBottom: 10,
     fontSize: 16,
+    fontWeight: "500",
+    color: "#374151",
+    marginBottom: 12,
+    textAlign: "center",
   },
   phoneContainer: {
     flexDirection: "row",
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 10,
-    padding: 10,
-    marginBottom: 30,
-    width: "100%",
-    alignItems: "center",
+    backgroundColor: "#ffffff",
+    borderRadius: 12,
+    marginBottom: 24,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 3,
   },
-  prefix: {
-    marginRight: 10,
-    fontWeight: "bold",
+  countryCode: {
+    backgroundColor: "#f1f5f9",
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+    borderTopLeftRadius: 12,
+    borderBottomLeftRadius: 12,
+    justifyContent: "center",
+    borderRightWidth: 1,
+    borderRightColor: "#e2e8f0",
+  },
+  countryCodeText: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#475569",
   },
   input: {
     flex: 1,
     fontSize: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+    color: "#1e293b",
   },
-  button: {
-    backgroundColor: "#F87171", // Coral suave
-    padding: 15,
-    borderRadius: 10,
-    width: "100%",
+  continueButton: {
+    backgroundColor: "#3b82f6",
+    paddingVertical: 16,
+    borderRadius: 12,
     alignItems: "center",
+    shadowColor: "#3b82f6",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 6,
   },
-  buttonText: {
-    color: "#fff",
+  continueButtonText: {
+    color: "#ffffff",
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: "600",
+  },
+  footer: {
+    fontSize: 12,
+    color: "#94a3b8",
+    textAlign: "center",
+    marginTop: 32,
+    lineHeight: 18,
   },
 });
