@@ -25,7 +25,7 @@ export default function HomeScreen() {
     const clean = phone.replace(/\D/g, "");
 
     if (clean.length < 8) {
-      Alert.alert("Teléfono inválido", "Ingresa un número válido.");
+      Alert.alert("Teléfono inválido", "tula gigante");
       return;
     }
 
