@@ -1,3 +1,4 @@
+import { FontAwesome, Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
@@ -14,7 +15,7 @@ import {
   View,
 } from "react-native";
 
-const { width } = Dimensions.get('window');
+const { width } = Dimensions.get("window");
 
 export default function HomeScreen() {
   const [phone, setPhone] = useState("");
@@ -24,10 +25,7 @@ export default function HomeScreen() {
   const dismissKeyboard = () => Keyboard.dismiss();
 
   const formatPhoneNumber = (text: string) => {
-    // Limpia solo n√∫meros
     const clean = text.replace(/\D/g, "");
-    
-    // Formatea autom√°ticamente: 9 1234 5678
     if (clean.length <= 1) return clean;
     if (clean.length <= 5) return `${clean.slice(0, 1)} ${clean.slice(1)}`;
     return `${clean.slice(0, 1)} ${clean.slice(1, 5)} ${clean.slice(5, 9)}`;
@@ -37,20 +35,22 @@ export default function HomeScreen() {
     Keyboard.dismiss();
     setIsLoading(true);
 
-    // Simular loading (opcional, para UX)
-    await new Promise(resolve => setTimeout(resolve, 800));
+    await new Promise((resolve) => setTimeout(resolve, 800));
 
-    // Limpia solo n√∫meros
     const clean = phone.replace(/\D/g, "");
-
     if (clean.length < 8) {
-      Alert.alert("N√∫mero inv√°lido", "Por favor ingresa un n√∫mero de tel√©fono v√°lido.");
+      Alert.alert(
+        "N√∫mero inv√°lido",
+        "Por favor ingresa un n√∫mero de tel√©fono v√°lido."
+      );
       setIsLoading(false);
       return;
     }
 
-    // Navegar a la nueva pantalla de selecci√≥n
-    router.push({ pathname: "/select-profile", params: { phone: `+56${clean}` } });
+    router.push({
+      pathname: "/select-profile",
+      params: { phone: `+56${clean}` },
+    });
     setIsLoading(false);
   };
 
@@ -63,8 +63,8 @@ export default function HomeScreen() {
     <TouchableWithoutFeedback onPress={dismissKeyboard} accessible={false}>
       <SafeAreaView style={styles.container}>
         <StatusBar barStyle="dark-content" backgroundColor="#f8fafc" />
-        
-        {/* Header con gradiente sutil */}
+
+        {/* Header */}
         <View style={styles.header}>
           <View style={styles.logoContainer}>
             <View style={styles.logoCircle}>
@@ -78,7 +78,11 @@ export default function HomeScreen() {
 
           {/* Hero section */}
           <View style={styles.heroSection}>
-            <Text style={styles.title}>Ì¥• Encuentra tu hogar ideal Ì¥•</Text>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Ionicons name="flame" size={28} color="#f87171" />
+              <Text style={styles.title}> Encuentra tu hogar ideal </Text>
+              <Ionicons name="flame" size={28} color="#f87171" />
+            </View>
             <Text style={styles.subtitle}>
               M√°s de 10,000 propiedades en Chile con b√∫squeda inteligente
             </Text>
@@ -91,7 +95,7 @@ export default function HomeScreen() {
             <Text style={styles.label}>Tu n√∫mero de tel√©fono</Text>
             <View style={styles.phoneContainer}>
               <View style={styles.countryCode}>
-                <Text style={styles.flag}>Ì∑®Ì∑±</Text>
+                <MaterialIcons name="flag" size={20} color="#475569" />
                 <Text style={styles.countryCodeText}>+56</Text>
               </View>
               <TextInput
@@ -108,9 +112,12 @@ export default function HomeScreen() {
             </View>
           </View>
 
-          {/* Bot√≥n continuar con estado de loading */}
-          <TouchableOpacity 
-            style={[styles.continueButton, isLoading && styles.continueButtonLoading]} 
+          {/* Bot√≥n continuar */}
+          <TouchableOpacity
+            style={[
+              styles.continueButton,
+              isLoading && styles.continueButtonLoading,
+            ]}
             onPress={onContinue}
             disabled={isLoading || phone.replace(/\D/g, "").length < 8}
           >
@@ -119,18 +126,18 @@ export default function HomeScreen() {
             </Text>
           </TouchableOpacity>
 
-          {/* Features preview */}
+          {/* Features */}
           <View style={styles.featuresPreview}>
             <View style={styles.feature}>
-              <Text style={styles.featureIcon}>Ì¥ñ</Text>
+              <FontAwesome name="cogs" size={24} color="#64748b" />
               <Text style={styles.featureText}>B√∫squeda con IA</Text>
             </View>
             <View style={styles.feature}>
-              <Text style={styles.featureIcon}>Ì≥ç</Text>
+              <Ionicons name="location-sharp" size={24} color="#64748b" />
               <Text style={styles.featureText}>Ubicaci√≥n precisa</Text>
             </View>
             <View style={styles.feature}>
-              <Text style={styles.featureIcon}>Ì≤∞</Text>
+              <Ionicons name="cash-outline" size={24} color="#64748b" />
               <Text style={styles.featureText}>Precios actualizados</Text>
             </View>
           </View>
@@ -149,10 +156,7 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f8fafc",
-  },
+  container: { flex: 1, backgroundColor: "#f8fafc" },
   header: {
     flex: 1,
     justifyContent: "center",
@@ -178,7 +182,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.4,
     shadowRadius: 24,
     elevation: 20,
-    // Efecto de borde interno sutil
     borderWidth: 3,
     borderColor: "rgba(255, 255, 255, 0.2)",
   },
@@ -206,27 +209,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 2,
     borderRadius: 12,
-    shadowColor: "#f59e0b",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
     elevation: 8,
   },
-  betaText: {
-    color: "#ffffff",
-    fontSize: 10,
-    fontWeight: "700",
-  },
-  heroSection: {
-    alignItems: "center",
-  },
+  betaText: { color: "#ffffff", fontSize: 10, fontWeight: "700" },
+  heroSection: { alignItems: "center" },
   title: {
-    fontSize: 32,
+    fontSize: 28,
     fontWeight: "700",
     color: "#0f172a",
     textAlign: "center",
     marginBottom: 12,
-    lineHeight: 38,
+    lineHeight: 34,
   },
   subtitle: {
     fontSize: 17,
@@ -235,29 +228,15 @@ const styles = StyleSheet.create({
     lineHeight: 26,
     maxWidth: width * 0.85,
   },
-  formSection: {
-    paddingHorizontal: 24,
-    paddingBottom: 20,
-  },
-  inputGroup: {
-    marginBottom: 24,
-  },
-  label: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: "#374151",
-    marginBottom: 12,
-  },
+  formSection: { paddingHorizontal: 24, paddingBottom: 20 },
+  inputGroup: { marginBottom: 24 },
+  label: { fontSize: 16, fontWeight: "600", color: "#374151", marginBottom: 12 },
   phoneContainer: {
     flexDirection: "row",
     backgroundColor: "#ffffff",
     borderRadius: 16,
     borderWidth: 2,
     borderColor: "#e2e8f0",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.08,
-    shadowRadius: 12,
     elevation: 4,
   },
   countryCode: {
@@ -265,26 +244,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#f8fafc",
     paddingHorizontal: 16,
-    paddingVertical: 18,
     borderTopLeftRadius: 14,
     borderBottomLeftRadius: 14,
     borderRightWidth: 2,
     borderRightColor: "#e2e8f0",
   },
-  flag: {
-    fontSize: 20,
-    marginRight: 8,
-  },
-  countryCodeText: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: "#475569",
-  },
+  countryCodeText: { fontSize: 16, fontWeight: "600", color: "#475569" },
   input: {
     flex: 1,
     fontSize: 17,
     paddingHorizontal: 16,
-    paddingVertical: 18,
     color: "#0f172a",
     fontWeight: "500",
   },
@@ -293,16 +262,10 @@ const styles = StyleSheet.create({
     paddingVertical: 18,
     borderRadius: 16,
     alignItems: "center",
-    shadowColor: "#3b82f6",
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.3,
-    shadowRadius: 12,
-    elevation: 8,
     marginBottom: 32,
+    elevation: 8,
   },
-  continueButtonLoading: {
-    backgroundColor: "#94a3b8",
-  },
+  continueButtonLoading: { backgroundColor: "#94a3b8" },
   continueButtonText: {
     color: "#ffffff",
     fontSize: 18,
@@ -314,32 +277,19 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     paddingVertical: 16,
   },
-  feature: {
-    alignItems: "center",
-    flex: 1,
-  },
-  featureIcon: {
-    fontSize: 24,
-    marginBottom: 8,
-  },
+  feature: { alignItems: "center", flex: 1 },
   featureText: {
     fontSize: 12,
     color: "#64748b",
     fontWeight: "500",
     textAlign: "center",
   },
-  footer: {
-    paddingHorizontal: 24,
-    paddingBottom: 20,
-  },
+  footer: { paddingHorizontal: 24, paddingBottom: 20 },
   footerText: {
     fontSize: 13,
     color: "#94a3b8",
     textAlign: "center",
     lineHeight: 20,
   },
-  footerLink: {
-    color: "#3b82f6",
-    fontWeight: "600",
-  },
+  footerLink: { color: "#3b82f6", fontWeight: "600" },
 });
